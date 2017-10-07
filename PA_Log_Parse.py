@@ -46,22 +46,38 @@ dist = []
 
 for x in bernstr:  #construct list based on observed quantites for geometric
 	if len(x) not in lengths:
-		lengths[len(x)] = 0
+		lengths[len(x)] = 1
 	else:
 		lengths[len(x)] += 1
 	dist.append(len(x)+1)
 
 
 tru_geo = np.random.geometric(.15,size=len(dist))
-tru_geo_cum = [0 for x in range(1,max(tru_geo)+1)]
-cum_tot = 0
+geo_dict = {}
 
+for x in tru_geo.tolist():
+	if x not in geo_dict:
+		geo_dict[x] = 1
+	else:
+		geo_dict[x] += 1
 
-#plt.show()
+axes = plt.gca()
+axes.set_xlim([0, 16])
+
+plt.subplot(211)
+plt.xlabel('Trials until success')
+plt.ylabel('Percent Occurance')
+
+plt.bar([x for x in geo_dict],[geo_dict[y]/len(dist)*100 for y in geo_dict],color = 'red')
+plt.subplot(212)
+plt.xlabel('Trials until success')
+plt.ylabel('Percent Occurance')
+plt.bar([x for x in lengths],[lengths[y]/len(dist)*100 for y in lengths])
+plt.show()
 
 
 end = stats.ks_2samp(dist,tru_geo)
-print(end)
+
 
 
 
