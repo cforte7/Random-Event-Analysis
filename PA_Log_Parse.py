@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from scipy import stats
+import math
 
 with open('test.txt') as f:
 	data = f.read()
@@ -79,9 +80,24 @@ plt.bar([x for x in lengths],[lengths[y]/len(dist)*100 for y in lengths])
 
 
 end = stats.ks_2samp(dist,tru_geo)
-#print(end[1])
+end2 = stats.anderson_ksamp((dist,tru_geo))
+ks_critical = (1.035)/(math.sqrt(len(dist))-.01+(.83/math.sqrt(len(dist))))
+
+
+print('Ho:The two sets of data Come from the same population.')
+print('Ha:The two sets of data do not come from the same population.\n')
 print('The Test Statistic for the Kolmogorov-Smirnov Test is:'+str(end[0])+'\nThe P value is:'+str(end[1]))
 
+print('Critical value for alpha = .01 is '+str(ks_critical))
+
+
+print('\n')
+print('The Test Statistic for the Anderson-Darling test is:'+str(end2[0]))
+print('The Critical values for the Anderson Darling test are:')
+significane = ['25%','10%','5%','2.5%','1%']
+for x in range(len(significane)):
+	print('      For '+significane[x]+' significane level: '+str(end2[1][x]))
+print('We Reject Ho for both tests at alpha = .01 because the test statistic \nfor both tests are above associated the critical values.')
 
 
 
