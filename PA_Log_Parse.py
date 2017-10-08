@@ -48,35 +48,39 @@ for x in bernstr:  #construct list based on observed quantites for geometric
 	if len(x) not in lengths:
 		lengths[len(x)] = 1
 	else:
+		dist.append(len(x)+1)
 		lengths[len(x)] += 1
-	dist.append(len(x)+1)
-
-
 tru_geo = np.random.geometric(.15,size=len(dist))
 geo_dict = {}
-
 for x in tru_geo.tolist():
-	if x not in geo_dict:
-		geo_dict[x] = 1
+	if x-1 not in geo_dict:
+		geo_dict[x-1] = 1
 	else:
-		geo_dict[x] += 1
+		geo_dict[x-1] += 1
 
-axes = plt.gca()
-axes.set_xlim([0, 16])
 
-plt.subplot(211)
+axes = plt.gcf()
+
+
+plt.subplot(121)
 plt.xlabel('Trials until success')
 plt.ylabel('Percent Occurance')
+plt.title('Random Samples from \n True Geometric Population')
+plt.bar([x for x in geo_dict if x < 18],[geo_dict[y]/len(dist)*100 for y in geo_dict if y < 18],color = 'red')
 
-plt.bar([x for x in geo_dict],[geo_dict[y]/len(dist)*100 for y in geo_dict],color = 'red')
-plt.subplot(212)
+
+
+plt.subplot(122)
 plt.xlabel('Trials until success')
 plt.ylabel('Percent Occurance')
+plt.title('Sample from Dota 2 Events')
 plt.bar([x for x in lengths],[lengths[y]/len(dist)*100 for y in lengths])
-plt.show()
+#plt.show()
 
 
 end = stats.ks_2samp(dist,tru_geo)
+#print(end[1])
+print('The Test Statistic for the Kolmogorov-Smirnov Test is:'+str(end[0])+'\nThe P value is:'+str(end[1]))
 
 
 
