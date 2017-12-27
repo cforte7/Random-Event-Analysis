@@ -9,7 +9,7 @@ with open('test.txt') as f:
 	data = f.read()
 
 
-data = [x.lstrip('\t').split('\n\t') for x in data.split('\n}\n{\n')]
+data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 
 
 dmg = []
