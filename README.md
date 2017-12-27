@@ -57,13 +57,15 @@ data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 ['type: 0', 'target: npc_dota_hero_axe', 'target_source: npc_dota_hero_axe', 'attacker_name: npc_dota_hero_phantom_assassin', 'damage_source: npc_dota_hero_phantom_assassin', 'is_attacker_illusion: 0', 'is_attacker_hero: 1', 'is_target_illusion: 0', 'is_target_hero: 1', 'is_visible_radiant: 1', 'is_visible_dire: 1', 'value: 24', 'value: 7466', 'timestamp: 2184.620', 'last_hits: 0']
 ```
 
-  The dataset will also include entries not relevent to our analysis so a filter must be applied.  
+  The dataset will also include entries not relevent to our analysis so a filter must be applied. Below is the iteration over the full dataset, where only entries with our character in question is the "attacker_name". If an entry meets this criteria, our value of interest (the damage dealt) will be added to the list ```dmg```
 ```python
 for x in data:
   try:
     if x[0] == 'type: 0' and (x[3] == 'attacker_name: npc_dota_hero_phantom_assassin' or 
-      x[4] == 'attacker_name:npc_dota_hero_phantom_assassin') and x[1].split('_')[-1] not in exclude:
+      x[4] == 'attacker_name:npc_dota_hero_phantom_assassin'):
 	dmg.append(x[11].split('value: ')[1])
 	if [x[1],x[2]] not in targets:
 	    targets.append([x[1],x[2]])
+    except IndexError:
+      pass
 ```
