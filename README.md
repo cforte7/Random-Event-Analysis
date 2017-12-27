@@ -11,7 +11,44 @@
   
   First we will walk through the application of a Monte Carlo experiment in order to generate data within the game, followed by the processing of this data. After, we will discuss the methods of the statistical tests utilized and end with our finalized results and conclusions.    
 
-## Data Collection
+## Data Collection and Structure
   The first step of this experiment is to collect a large number of trials of one type of event in Dota 2, constituting a form of [Monte Carlo experiment](https://en.wikipedia.org/wiki/Monte_Carlo_method). Without diving too far into the details of the game, in our experiment we are observing the repeated attack by one player who has a stated 15% chance to deal extra damage in order to compare the frequency of the attack bonus triggering (event sucess). While only one specific type of interaction is being tested, we can reasonably assume this random event generation mechanic extends beyond this specific instance.
   
   The events of the controlled in-game environment can be exported as a [log file](test.txt), automatically generating one entry for each event. Below is a sample:
+
+```
+{
+	type: 0
+	target: npc_dota_hero_axe
+	target_source: npc_dota_hero_axe
+	attacker_name: npc_dota_hero_phantom_assassin
+	damage_source: npc_dota_hero_phantom_assassin
+	is_attacker_illusion: 0
+	is_attacker_hero: 1
+	is_target_illusion: 0
+	is_target_hero: 1
+	is_visible_radiant: 1
+	is_visible_dire: 1
+	value: 24
+	value: 7466
+	timestamp: 2184.620
+	last_hits: 0
+}
+```
+  For the purposes of this analysis, we are concerned with "target" or "target_source", "attacker_name" or "damage_source", and the first "value" entry. 
+  
+  We begin the script by importing our needed packages as well as our data.
+```python
+import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from scipy import stats
+import math
+
+
+with open('test.txt') as f:
+	data = f.read()
+
+data = [x.lstrip('\t').split('\n\t') for x in data.split('\n}\n{\n')]
+```
+  Standard I/O functions from packages such as Pandas and Numpy do not work on this specific dataset's unique structure, so a line comprehension is used to break the data into a 2-dimensional array.
