@@ -57,7 +57,8 @@ data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 ['type: 0', 'target: npc_dota_hero_axe', 'target_source: npc_dota_hero_axe', 'attacker_name: npc_dota_hero_phantom_assassin', 'damage_source: npc_dota_hero_phantom_assassin', 'is_attacker_illusion: 0', 'is_attacker_hero: 1', 'is_target_illusion: 0', 'is_target_hero: 1', 'is_visible_radiant: 1', 'is_visible_dire: 1', 'value: 24', 'value: 7466', 'timestamp: 2184.620', 'last_hits: 0']
 ```
 
-  The dataset will also include entries not relevent to our analysis so a filter must be applied. Below is the iteration over the full dataset, where only entries with our character in question is the "attacker_name". If an entry meets this criteria, our value of interest (the damage dealt) will be added to the list ```dmg```
+  The dataset will also include entries not relevent to our analysis so a filter must be applied. Below is the iteration over the full dataset, where only entries of ```type: 0``` with our character in question as the "attacker_name" are included. If an entry meets this criteria, our value of interest (the damage dealt) will be added to the list ```dmg```.
+
 ```python
 for x in data:
   try:
@@ -69,3 +70,7 @@ for x in data:
     except IndexError:
       pass
 ```
+Note the usage of the error exception ```IndexError```. This is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```.
+![Damage Occurances](Figures/Damage_Occurances.png)
+![Bernoulli Occurances](Figures/Bernoulli_occurances.png)
+
