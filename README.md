@@ -64,6 +64,6 @@ for x in data:
     if x[0] == 'type: 0' and (x[3] == 'attacker_name: npc_dota_hero_phantom_assassin' or 
       x[4] == 'attacker_name:npc_dota_hero_phantom_assassin') and x[1].split('_')[-1] not in exclude:
 	dmg.append(x[11].split('value: ')[1])
-	  if [x[1],x[2]] not in targets:
+	if [x[1],x[2]] not in targets:
 	    targets.append([x[1],x[2]])
 ```
