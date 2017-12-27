@@ -35,7 +35,7 @@
 	last_hits: 0
 }
 ```
-  For the purposes of this analysis, we are concerned with "target" or "target_source", "attacker_name" or "damage_source", and the first "value" entry. 
+  For the purposes of this analysis, we are concerned with "target" or "target_source", "attacker_name" or "damage_source", and the first "value" entry which represents the damage done. 
   
   We begin the script by importing our needed packages as well as our data.
 ```python
@@ -49,6 +49,20 @@ import math
 with open('test.txt') as f:
 	data = f.read()
 
-data = [x.lstrip('\t').split('\n\t') for x in data.split('\n}\n{\n')]
+data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 ```
-  Standard I/O functions from packages such as Pandas and Numpy do not work on this specific dataset's unique structure, so a line comprehension is used to break the data into a 2-dimensional array.
+  Standard I/O functions from packages such as Pandas and Numpy do not work on this specific dataset's unique structure, so a line comprehension is used to break the data into a 2-dimensional array. In other words, we create a list of lists, with each list entry representing one event and each string entry representing an attribute of the event. The aforementioned event will be represented like so:
+  
+```
+['type: 0', 'target: npc_dota_hero_axe', 'target_source: npc_dota_hero_axe', 'attacker_name: npc_dota_hero_phantom_assassin', 'damage_source: npc_dota_hero_phantom_assassin', 'is_attacker_illusion: 0', 'is_attacker_hero: 1', 'is_target_illusion: 0', 'is_target_hero: 1', 'is_visible_radiant: 1', 'is_visible_dire: 1', 'value: 24', 'value: 7466', 'timestamp: 2184.620', 'last_hits: 0']
+```
+
+  The dataset will also include entries not relevent to our analysis so a filter must be applied.  
+```python
+for x in data:
+	try:
+		if x[0] == 'type: 0' and (x[3] == 'attacker_name: npc_dota_hero_phantom_assassin' or x[4] == 'attacker_name: npc_dota_hero_phantom_assassin') and x[1].split('_')[-1] not in exclude:
+			dmg.append(x[11].split('value: ')[1])
+			if [x[1],x[2]] not in targets:
+				targets.append([x[1],x[2]])
+```
