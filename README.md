@@ -73,5 +73,5 @@ for x in data:
 Note the usage of the error exception ```IndexError```. This is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```.
 ![Damage Occurances](Figures/Damage_Occurances.png)
 
-![Bernoulli Occurances](Figures/Bernoulli_count.png.png)
+![Bernoulli Occurances](Figures/Bernoulli_count.png)
 
