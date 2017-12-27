@@ -60,9 +60,10 @@ data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
   The dataset will also include entries not relevent to our analysis so a filter must be applied.  
 ```python
 for x in data:
-	try:
-		if x[0] == 'type: 0' and (x[3] == 'attacker_name: npc_dota_hero_phantom_assassin' or x[4] == 'attacker_name: npc_dota_hero_phantom_assassin') and x[1].split('_')[-1] not in exclude:
-			dmg.append(x[11].split('value: ')[1])
-			if [x[1],x[2]] not in targets:
-				targets.append([x[1],x[2]])
+  try:
+    if x[0] == 'type: 0' and (x[3] == 'attacker_name: npc_dota_hero_phantom_assassin' or 
+      x[4] == 'attacker_name:npc_dota_hero_phantom_assassin') and x[1].split('_')[-1] not in exclude:
+	dmg.append(x[11].split('value: ')[1])
+	  if [x[1],x[2]] not in targets:
+	    targets.append([x[1],x[2]])
 ```
