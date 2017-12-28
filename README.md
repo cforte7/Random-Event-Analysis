@@ -88,6 +88,7 @@ plt.show()
 ```
 
 ![Damage Occurances](Figures/Damage_Occurances.png)
+
 Figure 1: Occurance of damage values for all trials of the in game Monte Carlo experiment 
 
 
