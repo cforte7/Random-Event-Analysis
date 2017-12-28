@@ -62,16 +62,36 @@ data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 ```python
 for x in data:
   try:
-    if x[0] == 'type: 0' and (x[3] == 'attacker_name: npc_dota_hero_phantom_assassin' or 
-      x[4] == 'attacker_name:npc_dota_hero_phantom_assassin'):
-	dmg.append(x[11].split('value: ')[1])
-	if [x[1],x[2]] not in targets:
-	    targets.append([x[1],x[2]])
+    if x[0] == 'type: 0' and x[3] == 'attacker_name: npc_dota_hero_phantom_assassin':
+	dmg_val = x[11].split('value: ')[1]
+	dmg_val = int(dmg_val)
+	dmg.append(dmg_val)
     except IndexError:
       pass
 ```
-Note the usage of the error exception ```IndexError```. This is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```.
+<b>Note the usage of the error exception ```IndexError```:<b> This is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```. 
+
+After the ```dmg``` array is populated with the results from our Monte Carlo experiment, the data must be converted to Beroulli Sucess/Failure trials for further analysis. Based on the results seen in Figure 1, a clear divide can be made between the higher damage success trials and the lower damage failure trials. 
+
+```python
+dmg = np.array(dmg)
+dmg_count = np.unique(dmg,return_counts=True)
+
+x_axis1 = np.arange(5)
+plt.figure(1)
+plt.xlabel('Damage Delt')
+plt.ylabel('Occurances')
+plt.title('Total Occurances of Each Damage Value')
+sns.barplot(x_axis1,dmg_count[1])
+plt.xticks(x_axis1,dmg_count[0])
+plt.show()
+```
+
 ![Damage Occurances](Figures/Damage_Occurances.png)
+Figure 1: Occurance of damage values for all trials of the in game Monte Carlo experiment 
+
+
+
 
 ![Bernoulli Occurances](Figures/Bernoulli_counts.png)
 
