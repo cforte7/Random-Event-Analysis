@@ -5,7 +5,7 @@
 
   In modern computing, the generation of events with specific probabilities has been considered a necessary tool for applications ranging from executing computer simulation models, to running gambling machines. Another field where this is prevelant is in eSports, or competitive video gaming. With viewership [quickly growing and experts ancitipating it to become a billion dollar industry](http://www.businessinsider.com/esports-popularity-revenue-forecast-chart-2017-3), understanding the mechanism by which these games function can have major impacts. 
   
-  In this paper I will explore the usage of random event generation in the computer game Dota 2 and compare the stated probabilities and expected results to collected gameplay data.
+  <b>In this paper I will explore the usage of random event generation in the computer game Dota 2 by comparing the stated probabilities and expected results to collected gameplay data.</b>
   
   [General information about Dota 2 can be found here.](https://en.wikipedia.org/wiki/Dota_2)
   
@@ -71,7 +71,7 @@ for x in data:
 ```
 <b>Note:</b> The usage of the error exception ```IndexError``` is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```. 
 
-After the ```dmg``` array is populated with the results from our Monte Carlo experiment, the data must be converted to Beroulli Sucess/Failure trials for further analysis. Based on the results seen in Figure 1, a clear distinction can be made between the higher damage success trials and the lower damage failure trials. 
+After the ```dmg``` array is populated with the results from our Monte Carlo experiment, the data must be converted to Beroulli Sucess/Failure trials for further analysis. 
 
 ```python
 dmg = np.array(dmg)
@@ -91,8 +91,26 @@ plt.show()
 
 <b>Figure 1:</b> Occurance of damage values for all trials of the Monte Carlo experiment 
 
+Based on the results seen in <b>Figure 1</b>, a clear distinction can be made between the higher damage success trials and the lower damage failure trials. The data now must be converted from the specific damage values to ```1``` (Success) or ```0``` (Failure). 
 
+```python
+bernoulli = []
+for x in dmg:   #convert damage into bernouli trial 1=success, 0=failure
+	if int(x) <=25:
+		bernoulli.append(str(0))
+	else:
+		bernoulli.append(str(1))
 
+bernoulli_count = np.unique(bernoulli,return_counts=True)
+x_axis2 = np.arange(2)
+plt.figure(2)
+plt.ylabel('Occurances')
+plt.title('Total Occurances of Bernoulli Success/Failure')
+sns.barplot(x_axis2,bernoulli_count[1])
+plt.xticks(x_axis2,('Failure','Success'))
+plt.show()
+```
 
 ![Bernoulli Occurances](Figures/Bernoulli_counts.png)
 
+<b>Figure 2:</b> Occurance of Bernoulli Success/Failure for converted damage observations
