@@ -114,3 +114,9 @@ plt.show()
 ![Bernoulli Occurances](Figures/Bernoulli_counts.png)
 
 <b>Figure 2:</b> Occurance of Bernoulli Success/Failure for converted damage observations
+
+Part of our analysis involves utilizing the [Geometric Distribution](https://en.wikipedia.org/wiki/Geometric_distribution) so we must transform our array of Bernoulli trials to its geometric form, one observation being the number of trials between successes. In addition to this transformation, we must take a sample from a true geometric population. The stated probability of success from the game is 15%, so this will be used for the true geometric sample.
+
+## Statistical Analysis 
+  
+  
