@@ -5,7 +5,7 @@
 
   In modern computing, the generation of events with specific probabilities has been considered a necessary tool for applications ranging from executing computer simulation models, to running gambling machines. Another field where this is prevelant is in eSports, or competitive video gaming. With viewership [quickly growing and experts ancitipating it to become a billion dollar industry](http://www.businessinsider.com/esports-popularity-revenue-forecast-chart-2017-3), understanding the mechanism by which these games function can have major impacts. 
   
-  <b>In this Readme, I will explore random event generation in the computer game Dota 2 by comparing the stated probabilities/expected results to collected gameplay data, to determine accuracy of the stated probability and if the events can be considered independent.</b>
+  <b>In this Readme, I will explore random event generation in the computer game Dota 2 by comparing the stated probabilities/expected results to collected gameplay data, to determine accuracy of the stated probability and if the events can be considered [independent and identically distributed random variables](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).</b>
   
   [General information about Dota 2 can be found here.](https://en.wikipedia.org/wiki/Dota_2)
   
