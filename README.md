@@ -5,7 +5,7 @@
 
   In modern computing, the generation of events with specific probabilities has been considered a necessary tool for applications ranging from executing computer simulation models, to running gambling machines. Another field where this is prevelant is in eSports, or competitive video gaming. With viewership [quickly growing and experts ancitipating it to become a billion dollar industry](http://www.businessinsider.com/esports-popularity-revenue-forecast-chart-2017-3), understanding the mechanism by which these games function can have major impacts. 
   
-  <b>In this paper I will explore the usage of random event generation in the computer game Dota 2 by comparing the stated probabilities and expected results to collected gameplay data.</b>
+  <b>In this Readme, I will explore random event generation in the computer game Dota 2 by comparing the stated probabilities/expected results to collected gameplay data, to determine accuracy of the stated probability and if the events can be considered independent.</b>
   
   [General information about Dota 2 can be found here.](https://en.wikipedia.org/wiki/Dota_2)
   
@@ -61,13 +61,13 @@ data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 
 ```python
 for x in data:
-  try:
-    if x[0] == 'type: 0' and x[3] == 'attacker_name: npc_dota_hero_phantom_assassin':
-	dmg_val = x[11].split('value: ')[1]
-	dmg_val = int(dmg_val)
-	dmg.append(dmg_val)
-    except IndexError:
-      pass
+	try:
+		if x[0] == 'type: 0' and x[3] == 'attacker_name: npc_dota_hero_phantom_assassin':
+			dmg_val = x[11].split('value: ')[1]
+			dmg_val = int(dmg_val)
+			dmg.append(dmg_val)
+	except IndexError:
+		pass
 ```
 <b>Note:</b> The usage of the error exception ```IndexError``` is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```. 
 
@@ -115,7 +115,33 @@ plt.show()
 
 <b>Figure 2:</b> Occurance of Bernoulli Success/Failure for converted damage observations
 
-Part of our analysis involves utilizing the [Geometric Distribution](https://en.wikipedia.org/wiki/Geometric_distribution) so we must transform our array of Bernoulli trials to its geometric form, one observation being the number of trials between successes. In addition to this transformation, we must take a sample from a true geometric population. The stated probability of success from the game is 15%, so this will be used for the true geometric sample.
+Part of our analysis involves utilizing the [Geometric Distribution](https://en.wikipedia.org/wiki/Geometric_distribution) so we must transform our array of Bernoulli trials to its geometric form, one observation being the number of trials between successes. In addition to this transformation, we must take a sample from a true geometric population. The stated probability of success from the game is 15%, so this will be used for the true geometric sample. For both we will be creating dictionaries, with the ```key``` being the number of trials between successes, and the entry being the number of observations. 
+
+```python
+bernoulli = ''.join(bernoulli)
+bern_list = (bernoulli).split('1')
+
+
+sample_data = {}
+
+for x in bern_list:  #construct dictionary based on observed quantites for geometric
+	if len(x) not in lengths:
+		sample_data[len(x)] = 1
+	else:
+		sample_data[len(x)] += 1
+
+tru_geo = np.random.geometric(.15,size=len(dist))
+geo_dict = {}
+
+for x in tru_geo.tolist():
+	if x-1 not in geo_dict:
+		geo_dict[x-1] = 1
+	else:
+		geo_dict[x-1] += 1
+```
+
+Something important to note is the usage of ```x-1``` when creating the dictionary for the true geometric sample. The reason for this is that the numpy function used to generate our sample makes observations of the number of trials needed to get a success, while we measured our sample data based on the number of failures before a success. Both are valid representations, but one must be adjusted to ensure our samples are equivalent in this regard.
+
 
 ## Statistical Analysis 
   
