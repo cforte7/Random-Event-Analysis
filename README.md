@@ -173,5 +173,5 @@ plt.show()
   
   From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The PMF for the geometric sample is what would be expected, with a roughly 15% chance of zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurance and actually has a maximum value centered around 5 failures. While this graphical representation provides us with some useful insight, a more mathematical approach must be taken to more definitely prove the differences in the population.
   
-  ###Kolmogorov-Smirnov Test
+  ### Kolmogorov-Smirnov Test
   
