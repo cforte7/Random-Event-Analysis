@@ -145,7 +145,7 @@ Something important to note is the usage of ```x-1``` when creating the dictiona
 
 ## Statistical Analysis 
   
-  Now that our data has been fully processed, we will begin our analysis. More rigorously, in this section we will examine the probability that our random variable for the sample is independantly and identically distributed with a 15% chance of success as stated by the game. First, we will examine the data graphically by comparing the [probability mass functions (PMF)](https://en.wikipedia.org/wiki/Probability_mass_function) of our sample to our true geometric set. 
+  Now that our data has been fully processed, we will begin our analysis. More rigorously, in this section we will examine the probability that our random variable for the sample is independantly and identically distributed with a 15% chance of success as stated by the game. First, we will examine the data graphically by comparing the [Empirical distribution function](https://en.wikipedia.org/wiki/Empirical_distribution_function) of our sample to our true geometric set. 
   
   ```python
   x_axis1 = [x for x in geo_dict if x < 18]
@@ -169,9 +169,9 @@ plt.title('Sample from Dota 2 Events')
 plt.bar(x_axis2,y_axis2)
 plt.show()
 ```
-  ![Probability mass functions](Figures/Comparison_histogram2.png)
+  ![Empirical Distribution Functions](Figures/Comparison_histogram2.png)
   
-  From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The PMF for the geometric sample is what would be expected, with a roughly 15% chance of zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurance and actually has a maximum value centered around 5 failures. While this graphical representation provides us with some useful insight, a more mathematical approach must be taken to more definitely prove the differences in the population.
+  From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The EDF for the geometric sample is what would be expected, with a roughly 15% chance of zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurance and actually has a maximum value centered around 5 failures. While this graphical representation provides us with some useful insight, a more mathematical approach must be taken to more rigorously prove the differences between the samples.
   
   ### Kolmogorov-Smirnov Test
   
