@@ -177,7 +177,7 @@ plt.show()
   
   For the next part of our analysis we will employ the [Two Sample Kolmogorov-Smirnov Test (KS test)](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). This is a statistical test that measures the maximum difference between the EDF/CDF of two samples at a given point. We will define our formal hypothesis test as follows:
   
-  ![Hypothesis Test](Figures/Hypothesis_Test.PNG)
+ ![Hypothesis Test](Figures/Hypothesis_Test.PNG)
    
    <b>Note:</b>For our test statistic, E(i) refers to the value of the cumulative distribution function for our empirical samples. 
    
