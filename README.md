@@ -200,8 +200,8 @@ print('The Test Statistic for the Kolmogorov-Smirnov Test is:'+str(end[0])+'\nTh
    Ho:The two sets of data Come from the same population.
 Ha:The two sets of data do not come from the same population.
 
-The Test Statistic for the Kolmogorov-Smirnov Test is:0.130120481928
 Critical value for alpha = .01 is 0.080013553068832
+The Test Statistic for the Kolmogorov-Smirnov Test is:0.130120481928
 The P value is:1.32591521878e-06
 UserWarning: approximate p-value will be computed by extrapolation
 ```
