@@ -182,6 +182,7 @@ plt.show()
    <b>Note:</b>For our test statistic, E(i) refers to the value of the emperical distribution function for our empirical samples, with i representing each disticnt value represented in the EDF. 
    
    In addition to defining our null and alternative hypotheses, it is also necessary to define our critical value ([taken from the literature](https://www.webdepot.umontreal.ca/Usagers/angers/MonDepotPublic/STT3500H10/Critical_KS.pdf))
+   
    ![Critical Values](Figures/KS_critical_value.PNG)
    
    Now that we have defined our null hypothesis and have our two samples created, we will utilize the ```scipy.stats``` library to run the test:
