@@ -177,10 +177,32 @@ plt.show()
   
   For the next part of our analysis we will employ the [Two Sample Kolmogorov-Smirnov Test (KS test)](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). This is a statistical test that measures the maximum difference between the EDF/CDF of two samples at a given point. We will define our formal hypothesis test as follows:
   
- ![Hypothesis Test](Figures/Hypothesis_Test.PNG)
+ ![Hypothesis Test](Figures/hyp_test_final.PNG)
    
-   <b>Note:</b>For our test statistic, E(i) refers to the value of the cumulative distribution function for our empirical samples. 
+   <b>Note:</b>For our test statistic, E(i) refers to the value of the emperical distribution function for our empirical samples, with i representing each disticnt value represented in the EDF. 
    
+   In addition to defining our null and alternative hypotheses, it is also necessary to define our critical value ([taken from the literature](https://www.webdepot.umontreal.ca/Usagers/angers/MonDepotPublic/STT3500H10/Critical_KS.pdf))
+   ![Critical Values[(Figures/KS_critical_value.PNG)
    
+   Now that we have defined our null hypothesis and have our two samples created, we will utilize the ```scipy.stats``` library to run the test:
+   ```python
+end = stats.ks_2samp(bern_list,tru_geo)
+ks_critical = 1.63*math.sqrt((len(bern_list)+len(tru_geo))/(len(bern_list)*len(tru_geo)))
+print('Ho:The two sets of data Come from the same population.')
+print('Ha:The two sets of data do not come from the same population.\n')
+print('Critical value for alpha = .01 is '+str(ks_critical))
+print('The Test Statistic for the Kolmogorov-Smirnov Test is:'+str(end[0])+'\nThe P value is:'+str(end[1]))
+
+   ```
+   This gives us the following output:
+   ```
+   Ho:The two sets of data Come from the same population.
+Ha:The two sets of data do not come from the same population.
+
+The Test Statistic for the Kolmogorov-Smirnov Test is:0.130120481928
+Critical value for alpha = .01 is 0.080013553068832
+The P value is:1.32591521878e-06
+UserWarning: approximate p-value will be computed by extrapolation
+```
   
   
