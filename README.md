@@ -175,7 +175,7 @@ plt.show()
   
   ### Kolmogorov-Smirnov Test
   
-  For the next part of our analysis we will employ the [Two Sample Kolmogorov-Smirnov Test (KS test)](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). This is a statistical test that measures the maximum difference between the EDF/CDF of two samples at a given point. We will define our formal hypothesis test as follows:
+  For the next part of our analysis we will employ the [Two Sample Kolmogorov-Smirnov Test (KS test)](https://en.wikipedia.org/wiki/Kolmogorov%E2%80%93Smirnov_test). This is a nonparametric statistical test that measures the maximum difference between the EDF/CDF of two samples at a given point. We will define our formal hypothesis test as follows:
   
  ![Hypothesis Test](Figures/hyp_test_final.PNG)
    
@@ -205,5 +205,16 @@ The Test Statistic for the Kolmogorov-Smirnov Test is:0.130120481928
 The P value is:1.32591521878e-06
 UserWarning: approximate p-value will be computed by extrapolation
 ```
+
+  ## Analysis Conclusion
+  
+From this output, we can begin to analyze the results in a more empirical fashion. Utilizing an alpha value of .01, we have a critical value of around .08 which is compared to our test statistic of around .13.  From the literature, we reject our null hypothesis that the samples are taken from a common population if the following equation is true:
+
+![Null Hypothesis Rejection](Figures/reject_null.svg)
+
+In our case, the test statistic is greater than our critical value, therefore the equation holds true and we reject the null hyopthesis at the alpha=.01 level. Additionally, our P-Value of ```1.32591521878e-06``` is intrepreted to show the propability that two samples from the same population would provide us with the test statistic we got. Given this extremely low probability we are able to conclude that it is very unlikely that we are wrong in rejecting the null hypothesis and that <b>the samples are most likely not from the same population. Furthermore we can conclude that it is highly unlikely that each trial is an IID random variable and cannot be considered to have a 15% chance of success as implied by that the game. </b>
+
+
+
   
   
