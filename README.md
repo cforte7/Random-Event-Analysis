@@ -206,7 +206,7 @@ The P value is:1.32591521878e-06
 UserWarning: approximate p-value will be computed by extrapolation
 ```
 
-  ## Analysis Conclusion
+  ## Analysis and Conclusion
   
 From this output, we can begin to analyze the results in a more empirical fashion. Utilizing an alpha value of .01, we have a critical value of around .08 which is compared to our test statistic of around .13.  From the literature, we reject our null hypothesis that the samples are taken from a common population if the following equation is true:
 
