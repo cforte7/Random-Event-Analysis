@@ -172,12 +172,30 @@ plt.show()
   ![Empirical Distribution Functions](Figures/Comparison_histogram2.png)
   
   From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The EDF for the geometric sample is what would be expected, with a roughly 15% chance of a success with zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurance and actually has a maximum value centered around 5 failures. 
-  
+  ```python
+  bernoulli = ''.join(bernoulli)
+bern_list = (bernoulli).split('1')
+bern_list = [int(len(x)) for x in bern_list]
+
+sorted_bern = np.sort(bern_list)
+bern_y = np.arange(len(bern_list))/float(len(bern_list)-1)
+
+tru_geo = np.random.geometric(.15,size=len(bern_list))
+
+sorted_tru = np.sort(tru_geo)
+tru_y = np.arange(len(tru_geo))/float(len(tru_geo)-1)
+
+plt.figure(3)
+plt.plot(sorted_bern,bern_y, label = 'Sample Data')
+plt.plot(sorted_tru,tru_y,label='True Geometric Sample')
+plt.title('Comparison of Sample Data and True Geometric CDFs')
+plt.legend()
+plt.show()
+```
   ![Sample CDFs](Figures/CDFs.png)
   
-  Here we have a plot showing the cumulative distribution function for both samples. It is important to note the differences here since this is what is actually going to be measured by the Kolmogorov-Smirnov test, with larger differences leading to a larger test statistic. The details of this difference will be further explored in the next section.
+  Here we have a plot showing the cumulative distribution function for both samples. One important observation is the two lines at each value on the x axis. The larger this difference is, the less probable it is that the samples both come from the same population. This specifically is what our statistcal test will be measuring and will be discussed in greater detail in the next section. Another important observation is the difference in the domain of the two samples. Our true geometric sample has a much larger range of values than our sample data, hinting to the fact that the mechanic of random event generation in the game will not allow such large values to occur and will artifically supress this from happening.
 
-  
   While this graphical representation provides us with some useful insight, a more mathematical approach must be taken to more rigorously prove the differences between the samples.
   
   ### Kolmogorov-Smirnov Test
