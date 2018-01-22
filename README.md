@@ -120,7 +120,7 @@ Part of our analysis involves utilizing the [Geometric Distribution](https://en.
 ```python
 bernoulli = ''.join(bernoulli)
 bern_list = (bernoulli).split('1')
-
+bern_list = [int(len(x)) for x in bern_list]
 
 sample_data = {}
 
