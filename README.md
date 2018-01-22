@@ -173,7 +173,7 @@ plt.show()
   
   From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The EDF for the geometric sample is what would be expected, with a roughly 15% chance of a success with zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurance and actually has a maximum value centered around 5 failures. 
   
-  ![Sample CDFs](Figures/CDFs/png)
+  ![Sample CDFs](Figures/CDFs.png)
   
   Here we have a plot showing the cumulative distribution function for both samples. It is important to note the differences here since this is what is actually going to be measured by the Kolmogorov-Smirnov test, with larger differences leading to a larger test statistic. The details of this difference will be further explored in the next section.
 
