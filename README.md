@@ -9,10 +9,9 @@
   
   [General information about Dota 2 can be found here.](https://en.wikipedia.org/wiki/Dota_2)
   
-  First we will walk through the application of a Monte Carlo experiment in order to generate data within the game, followed by the processing of this data. After, we will discuss the methods of the statistical tests utilized and end with our finalized results and conclusions.    
 
 ## Data Collection and Structure
-  The first step of this experiment is to collect a large number of trials of one type of event in Dota 2, constituting a form of [Monte Carlo experiment](https://en.wikipedia.org/wiki/Monte_Carlo_method). Without diving too far into the details of the game, in our experiment we are observing the repeated attack by one player who has a stated 15% chance to deal bonus damage in order to compare the frequency of the attack bonus triggering (event sucess) to a true random event with sucess of 15%. While only one specific type of interaction is being tested, we can reasonably assume this random event generation mechanic extends beyond this specific instance.
+  The first step of this experiment is to collect a large number of trials of one type of event in Dota 2. Without diving too far into the details of the game, in our experiment we are observing the repeated attack by one player who has a stated 15% chance to deal bonus damage on each attack. We then compare the frequency of the attack bonus triggering (event sucess) to a true random event with probability of sucess of 15%. 
   
   The events of the controlled in-game environment can be exported as a [log file](test.txt), automatically generating one entry for each event. Below is a sample:
 
