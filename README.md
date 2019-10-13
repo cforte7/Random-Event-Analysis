@@ -3,7 +3,7 @@
 
 ## Introduction
 
-  In modern computing, the generation of events with specific probabilities has been considered a necessary tool for applications ranging from executing computer simulation models, to running gambling machines. Another field where this is prevelant is in eSports, or competitive video gaming. With viewership [quickly growing and experts ancitipating it to become a billion dollar industry](http://www.businessinsider.com/esports-popularity-revenue-forecast-chart-2017-3), understanding the mechanism by which these games function can have major impacts. 
+  In modern computing, the generation of events with specific probabilities has been considered a necessary tool for applications ranging from executing computer simulation models, to running gambling machines. Another field where this is prevalant is in eSports, or competitive video gaming. With viewership [quickly growing and experts anticipating it to become a billion dollar industry](http://www.businessinsider.com/esports-popularity-revenue-forecast-chart-2017-3), understanding the mechanism by which these games function can have major impacts. 
   
   <b>In this Readme, I will explore random event generation in the computer game Dota 2 by comparing the stated probabilities/expected results to collected gameplay data, to determine accuracy of the stated probability and if the events can be considered [independent and identically distributed random variables](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables).</b>
   
@@ -11,7 +11,7 @@
   
 
 ## Data Collection and Structure
-  The first step of this experiment is to collect a large number of trials of one type of event in Dota 2. Without diving too far into the details of the game, in our experiment we are observing the repeated attack by one player who has a stated 15% chance to deal bonus damage on each attack. We then compare the frequency of the attack bonus triggering (event sucess) to a true random event with probability of sucess of 15%. 
+  The first step of this experiment is to collect a large number of trials of one type of event in Dota 2. Without diving too far into the details of the game, in our experiment we are observing the repeated attack by one player who has a stated 15% chance to deal bonus damage on each attack. We then compare the frequency of the attack bonus triggering (event success) to a true random event with probability of success of 15%. 
   
   The events of the controlled in-game environment can be exported as a [log file](test.txt), automatically generating one entry for each event. Below is a sample:
 
@@ -56,7 +56,7 @@ data = [x.lstrip('\t}\n').split('\n\t') for x in data.split('\n}\n{\n')]
 ['type: 0', 'target: npc_dota_hero_axe', 'target_source: npc_dota_hero_axe', 'attacker_name: npc_dota_hero_phantom_assassin', 'damage_source: npc_dota_hero_phantom_assassin', 'is_attacker_illusion: 0', 'is_attacker_hero: 1', 'is_target_illusion: 0', 'is_target_hero: 1', 'is_visible_radiant: 1', 'is_visible_dire: 1', 'value: 24', 'value: 7466', 'timestamp: 2184.620', 'last_hits: 0']
 ```
 
-  The dataset will also include entries not relevent to our analysis so a filter must be applied. Below is the iteration over the full dataset, where only entries of ```type: 0``` with our character in question as the "attacker_name" are included. If an entry meets this criteria, our value of interest (the damage dealt) will be added to the list ```dmg```.
+  The dataset will also include entries not relevant to our analysis so a filter must be applied. Below is the iteration over the full dataset, where only entries of ```type: 0``` with our character in question as the "attacker_name" are included. If an entry meets this criteria, our value of interest (the damage dealt) will be added to the list ```dmg```.
 
 ```python
 for x in data:
@@ -70,7 +70,7 @@ for x in data:
 ```
 <b>Note:</b> The usage of the error exception ```IndexError``` is needed since events of different types have different numbers of attributes and entries short enough will cause our script to fail. No data of interest is lost due to this exception since no events of ```type: 0``` will cause an ```IndexError```. 
 
-After the ```dmg``` array is populated with the results from our Monte Carlo experiment, the data must be converted to Beroulli Sucess/Failure trials for further analysis. 
+After the ```dmg``` array is populated with the results from our Monte Carlo experiment, the data must be converted to Bernoulli Success/Failure trials for further analysis. 
 
 ```python
 dmg = np.array(dmg)
@@ -88,7 +88,7 @@ plt.show()
 
 ![Damage Occurances](Figures/Damage_Occurances.png)
 
-<b>Figure 1:</b> Occurance of damage values for all trials of the Monte Carlo experiment 
+<b>Figure 1:</b> Occurrence of damage values for all trials of the Monte Carlo experiment 
 
 Based on the results seen in <b>Figure 1</b>, a clear distinction can be made between the higher damage success trials and the lower damage failure trials. The data now must be converted from the specific damage values to ```1``` (Success) or ```0``` (Failure). 
 
@@ -112,7 +112,7 @@ plt.show()
 
 ![Bernoulli Occurances](Figures/Bernoulli_counts.png)
 
-<b>Figure 2:</b> Occurance of Bernoulli Success/Failure for converted damage observations
+<b>Figure 2:</b> Occurrence of Bernoulli Success/Failure for converted damage observations
 
 Part of our analysis involves utilizing the [Geometric Distribution](https://en.wikipedia.org/wiki/Geometric_distribution) so we must transform our array of Bernoulli trials to its geometric form, one observation being the number of trials between successes. In addition to this transformation, we must take a sample from a true geometric population. The stated probability of success from the game is 15%, so this will be used for the true geometric sample. For both we will be creating dictionaries, with the ```key``` being the number of trials between successes, and the entry being the number of observations. 
 
@@ -144,7 +144,7 @@ Something important to note is the usage of ```x-1``` when creating the dictiona
 
 ## Statistical Analysis 
   
-  Now that our data has been fully processed, we will begin our analysis. More rigorously, in this section we will examine the probability that our random variable for the sample is independantly and identically distributed with a 15% chance of success as stated by the game. First, we will examine the data graphically by comparing the [Empirical distribution function](https://en.wikipedia.org/wiki/Empirical_distribution_function) of our sample to our true geometric set. 
+  Now that our data has been fully processed, we will begin our analysis. More rigorously, in this section we will examine the probability that our random variable for the sample is independently and identically distributed with a 15% chance of success as stated by the game. First, we will examine the data graphically by comparing the [Empirical distribution function](https://en.wikipedia.org/wiki/Empirical_distribution_function) of our sample to our true geometric set. 
   
   ```python
   x_axis1 = [x for x in geo_dict if x < 18]
@@ -170,7 +170,7 @@ plt.show()
 ```
   ![Empirical Distribution Functions](Figures/Comparison_histogram2.png)
   
-  From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The EDF for the geometric sample is what would be expected, with a roughly 15% chance of a success with zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurance and actually has a maximum value centered around 5 failures. 
+  From visual inspection we can see there are clear differences in the behaviors and outcomes of the two samples. The EDF for the geometric sample is what would be expected, with a roughly 15% chance of a success with zero failures, and decreasing probabilities thereafter. For our game sample we see that the probability of having zero failures is not near the expected 15% chance of occurrance and actually has a maximum value centered around 5 failures. 
   ```python
   bernoulli = ''.join(bernoulli)
 bern_list = (bernoulli).split('1')
@@ -193,7 +193,7 @@ plt.show()
 ```
   ![Sample CDFs](Figures/CDFs.png)
   
-  Here we have a plot showing the cumulative distribution function for both samples. One important observation is the two lines at each value on the x axis. The larger this difference is, the less probable it is that the samples both come from the same population. This specifically is what our statistcal test will be measuring and will be discussed in greater detail in the next section. Another important observation is the difference in the domain of the two samples. Our true geometric sample has a much larger range of values than our sample data, hinting to the fact that the mechanic of random event generation in the game will not allow such large values to occur and will artifically supress this from happening.
+  Here we have a plot showing the cumulative distribution function for both samples. One important observation is the two lines at each value on the x axis. The larger this difference is, the less probable it is that the samples both come from the same population. This specifically is what our statistical test will be measuring and will be discussed in greater detail in the next section. Another important observation is the difference in the domain of the two samples. Our true geometric sample has a much larger range of values than our sample data, hinting to the fact that the mechanic of random event generation in the game will not allow such large values to occur and will artificially suppress this from happening.
 
   While this graphical representation provides us with some useful insight, a more mathematical approach must be taken to more rigorously prove the differences between the samples.
   
@@ -203,7 +203,7 @@ plt.show()
   
  ![Hypothesis Test](Figures/hyp_test_final.PNG)
    
-   <b>Note:</b>For our test statistic, E(i) refers to the value of the emperical distribution function for our empirical samples, with i representing each disticnt value represented in the EDF. 
+   <b>Note:</b>For our test statistic, E(i) refers to the value of the empirical distribution function for our empirical samples, with i representing each distinct value represented in the EDF. 
    
    In addition to defining our null and alternative hypotheses, it is also necessary to define our critical value ([taken from the literature](https://www.webdepot.umontreal.ca/Usagers/angers/MonDepotPublic/STT3500H10/Critical_KS.pdf))
    
@@ -236,7 +236,7 @@ From this output, we can begin to analyze the results in a more empirical fashio
 
 ![Null Hypothesis Rejection](Figures/reject_null.svg)
 
-In our case, the test statistic is greater than our critical value, therefore the equation holds true and we reject the null hyopthesis at the alpha=.01 level. Additionally, our P-Value of ```1.32591521878e-06``` is intrepreted to show the propability that two samples from the same population would provide us with the test statistic we got. Given this extremely low probability we are able to conclude that it is very unlikely that we are wrong in rejecting the null hypothesis and that <b>the samples are most likely not from the same population. Furthermore we can conclude that it is highly unlikely that each trial is an IID random variable and cannot be considered to have a 15% chance of success as implied by that the game. </b>
+In our case, the test statistic is greater than our critical value, therefore the equation holds true and we reject the null hypothesis at the alpha=.01 level. Additionally, our P-Value of ```1.32591521878e-06``` is interpreted to show the probability that two samples from the same population would provide us with the test statistic we got. Given this extremely low probability we are able to conclude that it is very unlikely that we are wrong in rejecting the null hypothesis and that <b>the samples are most likely not from the same population. Furthermore we can conclude that it is highly unlikely that each trial is an IID random variable and cannot be considered to have a 15% chance of success as implied by that the game. </b>
 
 
 
